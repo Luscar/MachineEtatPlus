@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F7EB65FC-18F2-4294-B66F-0DA8C1066DBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineEtatPlus.Processus", "src\MachineEtatPlus.Processus\MachineEtatPlus.Processus.csproj", "{C2F40C75-B14B-4CE1-AB5B-E52457196FB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{41E6EEE0-B333-4180-941A-2D0C9A5A95F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineEtatPlus.Processus.Tests", "tests\MachineEtatPlus.Processus.Tests\MachineEtatPlus.Processus.Tests.csproj", "{DE9C222E-3C03-486C-BA52-1E85DEB2C956}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2F40C75-B14B-4CE1-AB5B-E52457196FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F40C75-B14B-4CE1-AB5B-E52457196FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F40C75-B14B-4CE1-AB5B-E52457196FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F40C75-B14B-4CE1-AB5B-E52457196FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE9C222E-3C03-486C-BA52-1E85DEB2C956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9C222E-3C03-486C-BA52-1E85DEB2C956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9C222E-3C03-486C-BA52-1E85DEB2C956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9C222E-3C03-486C-BA52-1E85DEB2C956}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2F40C75-B14B-4CE1-AB5B-E52457196FB7} = {F7EB65FC-18F2-4294-B66F-0DA8C1066DBF}
+		{DE9C222E-3C03-486C-BA52-1E85DEB2C956} = {41E6EEE0-B333-4180-941A-2D0C9A5A95F8}
+	EndGlobalSection
+EndGlobal
