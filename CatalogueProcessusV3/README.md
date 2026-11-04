@@ -10,22 +10,34 @@ catalogue.Obtenir(CategorieProcessus.PlanificationDossier, TypeDossier.Entrepris
 catalogue.Obtenir(CategorieProcessus.Reception);                                 // null : aucun processus
 ```
 
-`Obtenir` retourne `null` quand aucun processus ne correspond (critère manquant, superflu,
-d'un autre enum, ou valeur non déclarée).
+Recherche : d'abord `(catégorie, critère)`, sinon le type par défaut de la catégorie.
+`Obtenir` retourne `null` quand rien ne correspond : critère absent ou non listé sans type par défaut,
+ou critère d'un autre enum que celui de la catégorie (ex. `TypeDossier` pour `Reception`).
 
 ## Déclarer la table
 
 Tout est dans `Configuration/CatalogueProcessusModule.cs` (`Definir`) : une ligne par correspondance.
 
 ```csharp
+// Catégorie à processus unique
 .Ajouter(CategorieProcessus.Relance, TypeProcessus.Relance)
+
+// Catégorie aiguillée : un bloc critère → type
+.Ajouter(CategorieProcessus.Reception,
+    (TypeFormulaire.Initial,        TypeProcessus.ReceptionInitiale),
+    (TypeFormulaire.Renouvellement, TypeProcessus.ReceptionRenouvellement))
+
+// Un type par défaut + seulement les critères atypiques (ex. 15 formulaires, 2 atypiques)
+.Ajouter(CategorieProcessus.Reception, parDefaut: TypeProcessus.ReceptionInitiale,
+    (TypeFormulaire.Renouvellement, TypeProcessus.ReceptionRenouvellement))
+
+// Une correspondance à la fois
 .Ajouter(CategorieProcessus.Reception, TypeFormulaire.Initial, TypeProcessus.ReceptionInitiale)
 ```
 
 `CatalogueProcessusBuilder` refuse à la construction :
-- un doublon `(catégorie, critère)`;
-- une catégorie qui mélange plusieurs genres de critère (ex. `TypeFormulaire` et `TypeDossier`),
-  ou avec et sans critère.
+- un doublon `(catégorie, critère)`, ou deux types par défaut pour une catégorie;
+- une catégorie aiguillée par plusieurs enums (ex. `TypeFormulaire` et `TypeDossier`).
 
 ## Autofac
 
