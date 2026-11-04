@@ -42,12 +42,16 @@ public sealed class CatalogueProcessusTests : IDisposable
         => Assert.Equal(attendu, _catalogue.Obtenir(CategorieProcessus.PlanificationDossier, dossier));
 
     [Fact]
-    public void Critere_manquant_retourne_null()
-        => Assert.Null(_catalogue.Obtenir(CategorieProcessus.Reception));
+    public void Critere_manquant_sans_defaut_retourne_null()
+        => Assert.Null(_catalogue.Obtenir(CategorieProcessus.Amender));
 
     [Fact]
-    public void Critere_superflu_retourne_null()
-        => Assert.Null(_catalogue.Obtenir(CategorieProcessus.Relance, TypeFormulaire.Initial));
+    public void Critere_manquant_avec_defaut_retourne_le_defaut()
+        => Assert.Equal(TypeProcessus.ReceptionInitiale, _catalogue.Obtenir(CategorieProcessus.Reception));
+
+    [Fact]
+    public void Critere_superflu_est_ignore_pour_une_categorie_a_processus_unique()
+        => Assert.Equal(TypeProcessus.Relance, _catalogue.Obtenir(CategorieProcessus.Relance, TypeFormulaire.Initial));
 
     [Fact]
     public void Mauvais_genre_de_critere_retourne_null()
@@ -55,8 +59,12 @@ public sealed class CatalogueProcessusTests : IDisposable
         => Assert.Null(_catalogue.Obtenir(CategorieProcessus.Reception, TypeDossier.Individuel));
 
     [Fact]
-    public void Valeur_non_declaree_retourne_null()
-        => Assert.Null(_catalogue.Obtenir(CategorieProcessus.Reception, (TypeFormulaire)99));
+    public void Valeur_non_declaree_sans_defaut_retourne_null()
+        => Assert.Null(_catalogue.Obtenir(CategorieProcessus.Amender, (TypeFormulaire)99));
+
+    [Fact]
+    public void Valeur_non_declaree_avec_defaut_retourne_le_defaut()
+        => Assert.Equal(TypeProcessus.ReceptionInitiale, _catalogue.Obtenir(CategorieProcessus.Reception, (TypeFormulaire)99));
 
     [Fact]
     public void Catalogue_est_un_singleton()

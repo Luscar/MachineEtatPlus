@@ -14,16 +14,20 @@ public sealed class CatalogueProcessusModule : Module
 
     /// <summary>La table du catalogue. Ajouter une ligne par (catégorie, critère?).</summary>
     public static CatalogueProcessusBuilder Definir(CatalogueProcessusBuilder b) => b
-        .Ajouter(CategorieProcessus.Reception, TypeFormulaire.Initial,        TypeProcessus.ReceptionInitiale)
-        .Ajouter(CategorieProcessus.Reception, TypeFormulaire.Renouvellement, TypeProcessus.ReceptionRenouvellement)
+        // Un type par défaut + seulement les formulaires atypiques
+        .Ajouter(CategorieProcessus.Reception, parDefaut: TypeProcessus.ReceptionInitiale,
+            (TypeFormulaire.Renouvellement, TypeProcessus.ReceptionRenouvellement))
 
         .Ajouter(CategorieProcessus.Relance, TypeProcessus.Relance)
 
-        .Ajouter(CategorieProcessus.PlanificationDossier, TypeDossier.Individuel, TypeProcessus.PlanificationIndividuelle)
-        .Ajouter(CategorieProcessus.PlanificationDossier, TypeDossier.Entreprise, TypeProcessus.PlanificationEntreprise)
+        .Ajouter(CategorieProcessus.PlanificationDossier,
+            (TypeDossier.Individuel, TypeProcessus.PlanificationIndividuelle),
+            (TypeDossier.Entreprise, TypeProcessus.PlanificationEntreprise))
 
-        .Ajouter(CategorieProcessus.Amender, TypeFormulaire.Initial,        TypeProcessus.AmendementInitial)
-        .Ajouter(CategorieProcessus.Amender, TypeFormulaire.Renouvellement, TypeProcessus.AmendementRenouvellement)
+        // Toutes les correspondances, sans défaut : un formulaire non listé → null
+        .Ajouter(CategorieProcessus.Amender,
+            (TypeFormulaire.Initial,        TypeProcessus.AmendementInitial),
+            (TypeFormulaire.Renouvellement, TypeProcessus.AmendementRenouvellement))
 
         .Ajouter(CategorieProcessus.Recotisation, TypeProcessus.Recotisation);
 }
