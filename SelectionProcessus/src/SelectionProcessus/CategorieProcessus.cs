@@ -5,4 +5,5 @@ public enum CategorieProcessus
 {
     ReceptionDeclaration,
     ReceptionCorrection,
+    ReceptionPaiement,
 }

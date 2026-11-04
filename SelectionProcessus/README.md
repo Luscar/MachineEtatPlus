@@ -21,6 +21,7 @@ selecteur.Determiner(CategorieProcessus.ReceptionDeclaration,
 | `CategorieProcessus` | La catégorie passée en paramètre (ex. `ReceptionDeclaration`). |
 | `ICriteresProcessus` | Les informations complémentaires ; **un record par catégorie** (ex. `CriteresReceptionDeclaration(TypeFormulaire)`). |
 | `DeterminateurParRegles<TCriteres>` | Une classe par catégorie ; déclare des règles ordonnées `Si(condition, type)`. La première règle vraie l'emporte. |
+| `DeterminateurProcessusUnique` | Pour une catégorie qui ne contient qu'un seul processus : le retourne toujours, sans critère. |
 | `SelecteurProcessus` | Point d'entrée : choisit le déterminateur selon la catégorie et lui délègue. |
 
 Les erreurs sont explicites :
@@ -48,7 +49,21 @@ public sealed class DeterminateurXyz : DeterminateurParRegles<CriteresXyz>
 4. L'enregistrer (avec Autofac : `builder.RegisterAssemblyTypes(asm).AssignableTo<IDeterminateurProcessus>().As<IDeterminateurProcessus>();`
    puis `builder.RegisterType<SelecteurProcessus>().As<ISelecteurProcessus>().SingleInstance();`).
 
-Une catégorie sans critère peut utiliser `AucunCritere.Instance`.
+### Catégorie à processus unique
+
+Si une catégorie ne contient qu'un seul type de processus, hériter de `DeterminateurProcessusUnique` :
+
+```csharp
+public sealed class DeterminateurReceptionPaiement : DeterminateurProcessusUnique
+{
+    public override CategorieProcessus Categorie => CategorieProcessus.ReceptionPaiement;
+    public override TypeProcessus TypeProcessus => TypeProcessus.TraitementPaiement;
+}
+
+selecteur.Determiner(CategorieProcessus.ReceptionPaiement); // => TraitementPaiement
+```
+
+Aucun critère n'est requis (la surcharge `Determiner(categorie)` passe `AucunCritere.Instance`) ; si des critères sont fournis, ils sont ignorés.
 
 ## Tests
 

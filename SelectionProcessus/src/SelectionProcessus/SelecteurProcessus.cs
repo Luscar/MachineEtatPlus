@@ -8,6 +8,9 @@ public interface ISelecteurProcessus
 {
     TypeProcessus Determiner(CategorieProcessus categorie, ICriteresProcessus criteres);
 
+    /// <summary>Pour une catégorie qui n'a besoin d'aucun critère (ex. un seul processus possible).</summary>
+    TypeProcessus Determiner(CategorieProcessus categorie);
+
     bool EssayerDeterminer(CategorieProcessus categorie, ICriteresProcessus criteres, out TypeProcessus typeProcessus);
 }
 
@@ -41,6 +44,9 @@ public sealed class SelecteurProcessus : ISelecteurProcessus
 
         return determinateur.Determiner(criteres);
     }
+
+    public TypeProcessus Determiner(CategorieProcessus categorie) =>
+        Determiner(categorie, AucunCritere.Instance);
 
     public bool EssayerDeterminer(CategorieProcessus categorie, ICriteresProcessus criteres, out TypeProcessus typeProcessus)
     {

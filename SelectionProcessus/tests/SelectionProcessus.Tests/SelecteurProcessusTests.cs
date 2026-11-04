@@ -1,5 +1,6 @@
 using SelectionProcessus.Categories.ReceptionCorrection;
 using SelectionProcessus.Categories.ReceptionDeclaration;
+using SelectionProcessus.Categories.ReceptionPaiement;
 
 namespace SelectionProcessus.Tests;
 
@@ -9,6 +10,7 @@ public class SelecteurProcessusTests
     [
         new DeterminateurReceptionDeclaration(),
         new DeterminateurReceptionCorrection(),
+        new DeterminateurReceptionPaiement(),
     ]);
 
     [Theory]
@@ -35,6 +37,28 @@ public class SelecteurProcessusTests
             new CriteresReceptionCorrection(nombre, electronique));
 
         Assert.Equal(attendu, resultat);
+    }
+
+    [Fact]
+    public void ReceptionPaiement_SansCritere_RetourneToujoursLeMemeProcessus()
+    {
+        Assert.Equal(TypeProcessus.TraitementPaiement,
+            _selecteur.Determiner(CategorieProcessus.ReceptionPaiement));
+    }
+
+    [Fact]
+    public void ReceptionPaiement_IgnoreLesCriteresRecus()
+    {
+        Assert.Equal(TypeProcessus.TraitementPaiement, _selecteur.Determiner(
+            CategorieProcessus.ReceptionPaiement,
+            new CriteresReceptionDeclaration(TypeFormulaire.FormulaireLot)));
+    }
+
+    [Fact]
+    public void CategorieAvecCriteres_AppeleeSansCritere_Leve()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            _selecteur.Determiner(CategorieProcessus.ReceptionDeclaration));
     }
 
     [Fact]

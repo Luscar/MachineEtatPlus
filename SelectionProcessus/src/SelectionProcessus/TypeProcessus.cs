@@ -11,4 +11,7 @@ public enum TypeProcessus
     CorrectionUnitaire,
     CorrectionMassive,
     CorrectionManuelle,
+
+    // Réception d'un paiement (un seul processus possible)
+    TraitementPaiement,
 }
